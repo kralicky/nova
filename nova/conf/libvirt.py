@@ -919,6 +919,23 @@ Related options:
 * ``virt_type`` (qemu)
 """),
 
+    cfg.StrOpt('gic_version',
+               default='3',
+               help="""
+For aarch64 guests using qemu, specifies the GIC version to use. See
+https://www.qemu.org/docs/master/system/arm/virt.html for a description of
+possible values.
+
+Note that the libvirt default for this value is '2' if this option is unset,
+which limits guest CPU cores to 8.
+
+Valid values are '2' and '3'. Libvirt currently does not recognize 'max'.
+
+See also:
+https://bugzilla.redhat.com/show_bug.cgi?id=1414081
+https://github.com/libvirt/libvirt/blob/3ea1550c64f689f1dff944cbe1e77c3e8f8f46f7/src/qemu/qemu_postparse.c#L1488
+"""),
+
     cfg.StrOpt('migration_inbound_addr',
                        default='$my_ip',
                        help="""

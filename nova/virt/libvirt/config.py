@@ -2959,6 +2959,18 @@ class LibvirtConfigGuestFeatureIOAPIC(LibvirtConfigGuestFeature):
         return root
 
 
+class LibvirtConfigGuestFeatureGICVersion(LibvirtConfigGuestFeature):
+
+    def __init__(self, version, **kwargs):
+        super().__init__('gic', **kwargs)
+        self.version = version
+
+    def format_dom(self):
+        root = super().format_dom()
+        root.set('version', self.version)
+        return root
+
+
 class LibvirtConfigGuestFeatureHyperV(LibvirtConfigGuestFeature):
 
     # QEMU requires at least this value to be set

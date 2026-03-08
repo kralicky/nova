@@ -6750,6 +6750,16 @@ class LibvirtDriver(driver.ComputeDriver):
                 guest.add_feature(
                     vconfig.LibvirtConfigGuestFeaturePMU(pmu))
 
+        if (
+            CONF.libvirt.virt_type in ("qemu", "kvm") and
+            guestarch == fields.Architecture.AARCH64
+        ):
+            LOG.info("setting gic version to %s (virt_type=%s)", CONF.libvirt.gic_version, CONF.libvirt.virt_type)
+            guest.add_feature(
+                vconfig.LibvirtConfigGuestFeatureGICVersion(CONF.libvirt.gic_version))
+        else:
+            LOG.info("not setting gic version (virt_type=%s; guestarch=%s)", CONF.libvirt.virt_type, guestarch)
+
     def _check_number_of_serial_console(self, num_ports):
         if (
             CONF.libvirt.virt_type in ("kvm", "qemu") and
